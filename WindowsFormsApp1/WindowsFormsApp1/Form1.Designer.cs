@@ -53,6 +53,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(430, 519);
             this.treeView1.TabIndex = 0;
+            this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect_1);
             // 
             // listView1
             // 
@@ -156,12 +157,13 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(1134, 259);
             this.richTextBox1.TabIndex = 4;
-            this.richTextBox1.Text = "";
+            this.richTextBox1.Text = "Перетащите текстовый документ в это поле...";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1290, 954);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.textBoxAdress);

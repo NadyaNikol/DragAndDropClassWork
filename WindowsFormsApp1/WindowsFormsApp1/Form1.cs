@@ -25,7 +25,6 @@ namespace WindowsFormsApp1
             FillDriveNodes();
 
             treeView1.ItemDrag += TreeView1_ItemDrag;
-            treeView1.NodeMouseDoubleClick += TreeView1_NodeMouseDoubleClick;
 
             InitialListView();
 
@@ -36,6 +35,8 @@ namespace WindowsFormsApp1
             richTextBox1.AllowDrop = true;
             richTextBox1.DragEnter += RichTextBox1_DragEnter;
             richTextBox1.DragDrop += RichTextBox1_DragDrop;
+
+           
 
         }
 
@@ -78,16 +79,14 @@ namespace WindowsFormsApp1
                 openfile = new OpenFileDialog();
                 openfile.FileName = name;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-               
             }
         }
 
         private void RichTextBox1_DragEnter(object sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.StringFormat))
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -99,8 +98,8 @@ namespace WindowsFormsApp1
 
         private void RichTextBox1_MouseDown(object sender, MouseEventArgs e)
         {
-           richTextBox1.AllowDrop = true;
-           richTextBox1.DoDragDrop(richTextBox1.Text, DragDropEffects.Copy);
+            richTextBox1.AllowDrop = true;
+            richTextBox1.DoDragDrop(richTextBox1.Text, DragDropEffects.Copy);
         }
 
         private void InitialContextMenu()
@@ -120,7 +119,7 @@ namespace WindowsFormsApp1
 
         }
 
-        private void InitialToolBar ()
+        private void InitialToolBar()
         {
             ImageList gallery = new ImageList();
             gallery.ImageSize = new Size(30, 30);
@@ -152,7 +151,7 @@ namespace WindowsFormsApp1
             toolbar.ButtonClick += Toolbar_ButtonClick;
         }
 
-        private void InitialListView ()
+        private void InitialListView()
         {
 
             listView1.FullRowSelect = true;
@@ -232,44 +231,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void TreeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-           
-            listView1.Clear();
-            if (Directory.Exists(e.Node.FullPath))
-            {
-                try
-                {
-                    string[] dirs = Directory.GetDirectories(e.Node.FullPath);
-
-                    if (dirs.Length != 0)
-                    {
-                        listView1.Columns.Add("FileName");
-                        listView1.Columns[0].Width = 300;
-                        listView1.Columns.Add("FilePath");
-                        listView1.Columns[0].Width = 300;
-
-                        textBoxAdress.Text = (new FileInfo(Path.GetFullPath(dirs[0]))).ToString();
-
-                        for (int i = 0; i < dirs.Length; i++)
-                        {
-                         
-                            listView1.Items.Add(Path.GetFileName(dirs[i]), 0);
-                            listView1.Items[i].SubItems.Add((new FileInfo(Path.GetFullPath(dirs[i]))).ToString());
-
-                            Bitmap image = new Bitmap("image1.bmp");
-                            largeGallary.Images.Add(image);
-                            smallGallary.Images.Add(image);
-                        }
-
-                    }
-                }
-                catch (Exception)
-                { }
-
-            }
-        }
-
         private void FillDriveNodes()
         {
             try
@@ -281,9 +242,8 @@ namespace WindowsFormsApp1
                     treeView1.Nodes.Add(driveNode);
                 }
             }
-            catch (Exception ex )
+            catch (Exception)
             {
-                MessageBox.Show($"{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -301,8 +261,6 @@ namespace WindowsFormsApp1
                         FillTreeNode(dirNode, dir[i]);
                         e.Node.Nodes.Add(dirNode);
                     }
-
-
                     string[] file = Directory.GetFiles(e.Node.FullPath);
                     for (int i = 0; i < file.Length; i++)
                     {
@@ -310,13 +268,13 @@ namespace WindowsFormsApp1
                         e.Node.Nodes.Add(fileNode);
                     }
                 }
-
             }
+
             catch (Exception)
             {
             }
-
         }
+
 
         private void smallIconToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -349,6 +307,43 @@ namespace WindowsFormsApp1
             f.Show();
         }
 
+        private void treeView1_BeforeSelect_1(object sender, TreeViewCancelEventArgs e)
+        {
+            listView1.Clear();
+            if (Directory.Exists(e.Node.FullPath))
+            {
+                try
+                {
+                    string[] dirs = Directory.GetDirectories(e.Node.FullPath);
+
+                    if (dirs.Length != 0)
+                    {
+                        listView1.Columns.Add("FileName");
+                        listView1.Columns[0].Width = 300;
+                        listView1.Columns.Add("FilePath");
+                        listView1.Columns[0].Width = 300;
+
+                        textBoxAdress.Text = (new FileInfo(Path.GetFullPath(dirs[0]))).ToString();
+
+                        for (int i = 0; i < dirs.Length; i++)
+                        {
+
+                            listView1.Items.Add(Path.GetFileName(dirs[i]), 0);
+                            listView1.Items[i].SubItems.Add((new FileInfo(Path.GetFullPath(dirs[i]))).ToString());
+
+                            Bitmap image = new Bitmap("image1.bmp");
+                            largeGallary.Images.Add(image);
+                            smallGallary.Images.Add(image);
+                        }
+
+                    }
+                }
+                catch (Exception )
+                {
+                }
+
+            }
+        }
 
         private void FillTreeNode(TreeNode dirNode, string path)
         {
