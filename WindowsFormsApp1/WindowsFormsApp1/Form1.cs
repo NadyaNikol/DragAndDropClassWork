@@ -15,15 +15,16 @@ namespace WindowsFormsApp1
     {
         ImageList largeGallary, smallGallary = null;
         ToolBar toolbar = null;
+        OpenFileDialog openfile = null;
 
         public Form1()
         {
             InitializeComponent();
 
-            treeView1.BeforeSelect += TreeView1_BeforeSelect;
-            treeView1.BeforeExpand += TreeView1_BeforeExpand;
+            treeView1.BeforeExpand += TreeView1_BeforeSelect;
             FillDriveNodes();
 
+            treeView1.ItemDrag += TreeView1_ItemDrag;
             treeView1.NodeMouseDoubleClick += TreeView1_NodeMouseDoubleClick;
 
             InitialListView();
@@ -32,6 +33,74 @@ namespace WindowsFormsApp1
 
             InitialToolBar();
 
+            richTextBox1.AllowDrop = true;
+            richTextBox1.DragEnter += RichTextBox1_DragEnter;
+            richTextBox1.DragDrop += RichTextBox1_DragDrop;
+
+        }
+
+        private void TreeView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            richTextBox1.ReadOnly = false;
+            TreeNode tree = (TreeNode)e.Item;
+            openfile = new OpenFileDialog();
+            DoDragDrop(tree.FullPath, DragDropEffects.Copy | DragDropEffects.Move);
+
+            try
+            {
+                if (openfile.FileName.EndsWith("rtf"))
+                {
+                    richTextBox1.LoadFile(openfile.FileName, RichTextBoxStreamType.RichText);
+                }
+                else
+                {
+                    using (StreamReader reader = new StreamReader(openfile.FileName, Encoding.Default))
+                    {
+                        richTextBox1.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+
+        private void RichTextBox1_DragDrop(object sender, DragEventArgs e)
+        {
+
+            openfile = new OpenFileDialog();
+            string name = e.Data.GetData(DataFormats.Text).ToString();
+            richTextBox1.Clear();
+
+            try
+            {
+                openfile = new OpenFileDialog();
+                openfile.FileName = name;
+            }
+            catch (Exception)
+            {
+
+               
+            }
+        }
+
+        private void RichTextBox1_DragEnter(object sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void RichTextBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+           richTextBox1.AllowDrop = true;
+           richTextBox1.DoDragDrop(richTextBox1.Text, DragDropEffects.Copy);
         }
 
         private void InitialContextMenu()
@@ -212,70 +281,34 @@ namespace WindowsFormsApp1
                     treeView1.Nodes.Add(driveNode);
                 }
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-
-                throw;
+                MessageBox.Show($"{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void TreeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-            e.Node.Nodes.Clear();
-
-            try
-            {
-
-                if (Directory.Exists(e.Node.FullPath))
-                {
-
-                    string[] dirs = Directory.GetDirectories(e.Node.FullPath);
-
-                    if (dirs.Length != 0)
-                    {
-
-                        for (int i = 0; i < dirs.Length; i++)
-                        {
-                            TreeNode deerN = new TreeNode(new DirectoryInfo(dirs[i]).Name);
-                            FillTreeNode(deerN, dirs[i]);
-                            e.Node.Nodes.Add(deerN);
-                        }
-
-                    }
-
-                }
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
         }
 
         private void TreeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-
-
+            e.Node.Nodes.Clear();
             try
             {
                 if (Directory.Exists(e.Node.FullPath))
                 {
-
-                    string[] dirs = Directory.GetDirectories(e.Node.FullPath);
-
-                    if (dirs.Length != 0)
+                    string[] dir = Directory.GetDirectories(e.Node.FullPath);
+                    for (int i = 0; i < dir.Length; i++)
                     {
-
-                        for (int i = 0; i < dirs.Length; i++)
-                        {
-                            TreeNode dirNode = new TreeNode(new DirectoryInfo(dirs[i]).Name);
-                            FillTreeNode(dirNode, dirs[i]);
-                            e.Node.Nodes.Add(dirNode);
-                        }
+                        TreeNode dirNode = new TreeNode(new DirectoryInfo(dir[i]).Name);
+                        FillTreeNode(dirNode, dir[i]);
+                        e.Node.Nodes.Add(dirNode);
                     }
 
+
+                    string[] file = Directory.GetFiles(e.Node.FullPath);
+                    for (int i = 0; i < file.Length; i++)
+                    {
+                        TreeNode fileNode = new TreeNode(new DirectoryInfo(file[i]).Name);
+                        e.Node.Nodes.Add(fileNode);
+                    }
                 }
 
             }
@@ -325,10 +358,15 @@ namespace WindowsFormsApp1
 
                 foreach (string dir in dirs)
                 {
-                    TreeNode treeN = new TreeNode();
-                    treeN.Text = dir.Remove(0, dir.LastIndexOf("\\") + 1);
-
+                    TreeNode treeN = new TreeNode(dir.Remove(0, dir.LastIndexOf("\\") + 1));
                     dirNode.Nodes.Add(treeN);
+                }
+
+                string[] files = Directory.GetFiles(path);
+                foreach (string file in files)
+                {
+                    TreeNode fileNode = new TreeNode(new DirectoryInfo(file).Name);
+                    dirNode.Nodes.Add(fileNode);
                 }
             }
             catch (Exception)

@@ -42,6 +42,7 @@
             this.tileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.textBoxAdress = new System.Windows.Forms.TextBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,11 +150,20 @@
             this.textBoxAdress.Size = new System.Drawing.Size(647, 26);
             this.textBoxAdress.TabIndex = 3;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(13, 667);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(1134, 259);
+            this.richTextBox1.TabIndex = 4;
+            this.richTextBox1.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1290, 954);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.textBoxAdress);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.treeView1);
@@ -184,6 +194,7 @@
         private System.Windows.Forms.ToolStripMenuItem tileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openInNewWindowToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxAdress;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 
