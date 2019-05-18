@@ -7,3 +7,13 @@ C:\Users\PKO\Desktop\Надя\DragAndDropClassWork\WindowsFormsApp1\WindowsForms
 C:\Users\PKO\Desktop\Надя\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
 C:\Users\PKO\Desktop\Надя\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\PKO\Desktop\Надя\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Nadya\Desktop\Новая папка (4)\DragAndDropClassWork\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
